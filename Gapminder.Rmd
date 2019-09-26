@@ -1,0 +1,38 @@
+---
+title: "Gapminder"
+author: "Pieter Quinton"
+date: "9/26/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warnings = FALSE, message = FALSE)
+```
+
+```{r libraries, include=FALSE}
+library(tidyverse)
+library(gapminder)
+library(gganimate)
+library(gifski)
+```
+
+```{r}
+gapminder <- gapminder
+
+plot_data <- gapminder %>%
+  filter(continent %in% c("Americas", "Africa", "Asia"))
+  
+plot <- plot_data %>%  
+  options(scipen = 999) %>%
+  ggplot(aes(x = gdpPercap, y = lifeExp, size = pop, color = pop)) +
+  geom_point() +
+  scale_x_log10() +
+  facet_wrap(~continent) + 
+  labs(title = "The World Gets Better Every Year:",
+         x = "GDP Per Capita",
+         y = "Life Expectancy")
+  
+plot
+
+```
+
